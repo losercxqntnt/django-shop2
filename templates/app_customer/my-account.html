@@ -1,0 +1,164 @@
+{%extends 'app_store/_Base.html'%}
+{%block main_content %}
+
+        <!-- breadcrumb-area start -->
+        <div class="breadcrumb-area">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-12 text-center">
+                        <h2 class="breadcrumb-title">Account</h2>
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active">Account</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- breadcrumb-area end -->
+        <!-- account area start -->
+        <div class="account-dashboard pt-100px pb-100px">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <!-- Nav tabs -->
+                        <div class="dashboard_tab_button" data-aos="fade-up" data-aos-delay="0">
+                            <ul role="tablist" class="nav flex-column dashboard-list">
+                                <li><a href="#account-details" data-bs-toggle="tab" class="nav-link active">Account details</a>
+                                {% comment %} <li><a href="#dashboard" data-bs-toggle="tab" class="nav-link ">Dashboard</a></li> {% endcomment %}
+                                <li> <a href="#orders" data-bs-toggle="tab" class="nav-link">Orders</a></li>
+                                {% comment %} <li><a href="#downloads" data-bs-toggle="tab" class="nav-link">Downloads</a></li> {% endcomment %}
+                                {% comment %} <li><a href="#address" data-bs-toggle="tab" class="nav-link">Addresses</a></li> {% endcomment %}
+                                
+                                </li>
+                                <li><a href="{% url 'app_customer:dang_xuat'%}" class="nav-link">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-9 col-lg-9">
+                        <!-- Tab panes -->
+                        <div class="tab-content dashboard_content" data-aos="fade-up" data-aos-delay="200">
+                            
+
+                            <div class="tab-pane fade" id="orders">
+                                <h4>Orders</h4>
+                                <div class="table_page table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Mã đơn hàng</th>
+                                                <th>Ngày đặt hàng</th>
+                                                <th>Trạng thái</th>
+                                                <th>Tổng thành tiền</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for don_hang in danh_sach_don_hang %}
+                                            <tr>
+                                                <td>{{ don_hang.ma_don_hang }}</td>
+                                                <td>{{ don_hang.ngay_tao }}</td>
+                                                <td>
+                                                    {% if don_hang.trang_thai == 0 %}
+                                                        <span class="text-danger">Chưa giao</span>
+                                                    {% else %}
+                                                        <span class="text-success">Đã giao</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>$25.00 for 1 item </td>
+                                                <td><a href="cart.html" class="view">view</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                          
+                            
+                            <div class="tab-pane fade show active" id="account-details">
+                                <h3>Account details </h3>
+                                <div class="login">
+                                    <div class="login_form_container">
+                                        <div class="account_login_form">
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <div class="default-form-box mb-20">
+                                                    {{ form_thong_tin.ten_dang_nhap.label }}
+                                                    {{ form_thong_tin.ten_dang_nhap }}
+                                                </div>
+                                                <div class="default-form-box mb-20">
+                                                    {{ form_thong_tin.ho.label }}
+                                                    {{ form_thong_tin.ho }}
+                                                </div>
+                                                <div class="default-form-box mb-20">
+                                                    {{ form_thong_tin.ten.label }}
+                                                    {{ form_thong_tin.ten }}
+                                                </div>
+                                                <div class="default-form-box mb-20">
+                                                    {{ form_thong_tin.ngay_sinh.label }}
+                                                    {{ form_thong_tin.ngay_sinh }}
+                                                </div>
+                                                <div class="default-form-box mb-20">
+                                                    {{ form_thong_tin.email.label }}
+                                                    {{ form_thong_tin.email }}
+                                                </div>
+                                                <div class="default-form-box mb-20">
+                                                    {{ form_thong_tin.dien_thoai.label }}
+                                                    {{ form_thong_tin.dien_thoai }}
+                                                </div>
+                                                <div class="default-form-box mb-20">
+                                                    {{ form_thong_tin.dia_chi.label }}
+                                                    {{ form_thong_tin.dia_chi }}
+                                                </div>
+                                                
+                                                <div class="save_button mt-3">
+                                                    <button class="btn" type="submit" name="btnCapNhat" value="Cập nhật">
+                                                        Cập nhật
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <h3>Đổi mật khẩu</h3>
+                            <div class="login">
+                                <div class="login_form_container">
+                                    {{ thong_bao_doi_mat_khau|safe }}
+
+                                    <div class="account_login_form">
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <div class="default-form-box mb-20">
+                                                {{ form_doi_mat_khau.mat_khau_cu.label }}
+                                                {{ form_doi_mat_khau.mat_khau_cu }}
+                                            </div>
+                                            <div class="default-form-box mb-20">
+                                                {{ form_doi_mat_khau.mat_khau_moi.label }}
+                                                {{ form_doi_mat_khau.mat_khau_moi }}
+                                            </div>
+                                            <div class="default-form-box mb-20">
+                                                {{ form_doi_mat_khau.xac_nhan_mat_khau_moi.label }}
+                                                {{ form_doi_mat_khau.xac_nhan_mat_khau_moi }}
+                                            </div>
+                                            
+                                            <div class="save_button mt-3">
+                                                <button class="btn" type="submit" name="btnDoiMatKhau" value="Đổi mật khẩu">
+                                                    Đổi mật khẩu
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- account area start -->
+{%endblock %}        

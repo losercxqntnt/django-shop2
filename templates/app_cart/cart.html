@@ -1,0 +1,120 @@
+{%extends 'app_store/_Base.html'%}
+{% load humanize %}
+{%block main_content %}
+
+    <!-- breadcrumb-area start -->
+    <div class="breadcrumb-area">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-12 text-center">
+                    <h2 class="breadcrumb-title">Cart</h2>
+                    <!-- breadcrumb-list start -->
+                    <ul class="breadcrumb-list">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active">Cart</li>
+                    </ul>
+                    <!-- breadcrumb-list end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb-area end -->
+    <!-- Cart Area Start -->
+    <div class="cart-main-area pt-100px pb-100px">
+        <div class="container">
+    
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="table-content table-responsive cart-table-content">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Hình ảnh</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Đơn giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for gh in gio_hang %}
+                                        <tr>
+                                            <td class="product-thumbnail">
+                                                <a href="#"><img class="img-responsive ml-15px"  src="{{ gh.san_pham.hinhsanpham_set.all.0 }}" alt="{{ gh.san_pham }}" /></a>
+                                            </td>
+                                            <td class="product-name"><a href="#">{{ gh.san_pham }}</a></td>
+                                            <td class="product-price-cart">
+                                                <span class="amount">{{ gh.gia_ban|intcomma }}</span></td>
+                                            <td class="product-quantity">
+                                                <div class="cart-plus-minus">
+                                                    <input class="cart-plus-minus-box" type="text" name="so_luong_{{ gh.san_pham.id }}" value="{{ gh.so_luong }}" />
+{{ gh.gia_ban|intcomma }}                                            </td>
+                                            <td class="product-subtotal">{{ gh.thanh_tien|intcomma }}</td>
+                                            <td class="product-remove">
+                                               
+                                                <a href="{% url 'app_cart:xoa_san_pham' san_pham_id=gh.san_pham.id %}"><i class="fa fa-times"></i></a>
+                                            </td>
+                                        </tr>
+                                    {%endfor%}
+                                 
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="cart-shiping-update-wrapper">
+                                    <div class="cart-shiping-update">
+                                        <a href="#">tiếp tục mua hàng</a>
+                                    </div>
+                                    <div class="cart-clear">
+                                        <button type="submit" name="btnCapNhatGioHang" value="Cập nhật giỏ hàng">
+                                            Cập nhật giỏ hàng
+                                        </button>
+                                        <a href="{% url 'app_cart:xoa_gio_hang' %}">Xóa giỏ hàng</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 mb-lm-30px">
+                            
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-lm-30px">
+                            <div class="discount-code-wrapper">
+                                <div class="title-wrap">
+                                    <h4 class="cart-bottom-title section-bg-gray">Mã giảm giá</h4>
+                                </div>
+                                <div class="discount-code">
+                                    <p>Nhập mã giảm giá để được hưởng ưu đãi</p>
+                                    <form>
+                                        <input type="text" required="" name="name" />
+                                        <button class="cart-btn-2" type="submit">Apply Coupon</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 mt-md-30px">
+                            <div class="grand-totall">
+                                <div class="title-wrap">
+                                    <h4 class="cart-bottom-title section-bg-gary-cart">Thông tin đơn hàng</h4>
+                                </div>
+                                <h5>Tạm tính <span>{{ gio_hang.tong_tien_tam_tinh|intcomma }}</span></h5>
+                                <h5>Tiền giảm <span>{{ gio_hang.tien_giam_gia|intcomma }}</span></h5>
+                                <h5>Phí giao hàng <span>0</span></h5>
+                                <h4 class="grand-totall-title">Tiền phải trả <span>{{ gio_hang.tong_tien_phai_tra|intcomma }}</span></h4>
+                                <a href="{% url 'app_cart:thanh_toan' %}">Thanh toán</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Cart Area End -->
+      
+{%endblock%}

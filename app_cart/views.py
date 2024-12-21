@@ -6,11 +6,9 @@ from app_store.models import SanPham
 from app_customer.models import KhachHang
 from datetime import datetime
 
-
 # Create your views here.
 def gio_hang(request):
     gio_hang = GioHang(request)
-    
     if request.POST.get('btnCapNhatGioHang'):
         gio_hang_moi = {}
         for gh in gio_hang:
@@ -35,7 +33,6 @@ def gio_hang(request):
     return render(request, 'app_cart/cart.html', {
         'gio_hang': gio_hang
     })
-
 
 def thanh_toan(request):
     if 's_khach_hang' not in request.session:
@@ -67,23 +64,37 @@ def thanh_toan(request):
                                               thanh_tien=gh['thanh_tien'])
             else:
                 # Gửi mail
-                
+
                 # Xóa tất cả các SP trong giỏ hàng
                 gio_hang.xoa_gio_hang()
                 return render(request, 'app_cart/thank-you-page.html')
-    
-    return render(request, 'app_cart/checkout.html')
 
+    san_phams = []
+    tong_giam_gia = 0
+    tong_thanh_tien = 0
+    if len(gio_hang) >= 1:
+        for gh in gio_hang:
+            san_pham = {
+                "ten_san_pham": gh['san_pham'],
+                "don_gia": gh['gia_ban'],
+                "so_luong": gh['so_luong'],
+            }
+            tong_giam_gia += gh['giam_gia']
+            tong_thanh_tien += gh['thanh_tien']
+            san_phams.append(san_pham)
+        tong_thanh_tien -= tong_giam_gia
+
+    return render(request, 'app_cart/checkout.html', {
+        'san_phams': san_phams,
+        'tong_giam_gia': tong_giam_gia,
+        'tong_thanh_tien': tong_thanh_tien
+    })
 
 def gio_hang_rong(request):
-    
     return render(request, 'app_cart/empty-cart.html')
 
-
 def cam_on(request):
-    
     return render(request, 'app_cart/thank-you-page.html')
-
 
 def mua_ngay(request, san_pham_id):
     gio_hang = GioHang(request)
@@ -93,16 +104,13 @@ def mua_ngay(request, san_pham_id):
         gio_hang.them_vao_gio_hang(san_pham, so_luong)
     return redirect('app_cart:gio_hang')
 
-
 def xoa_san_pham(request, san_pham_id):
     gio_hang = GioHang(request)
     san_pham = get_object_or_404(SanPham, id=san_pham_id)
     gio_hang.xoa_san_pham(san_pham)
     return redirect('app_cart:gio_hang')
 
-
 def xoa_gio_hang(request):
     gio_hang = GioHang(request)
     gio_hang.xoa_gio_hang()
     return redirect('app_cart:gio_hang')
-

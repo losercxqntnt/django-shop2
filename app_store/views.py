@@ -18,8 +18,8 @@ def trang_chu(request):
     danh_sach_san_pham = SanPham.objects.filter(danh_muc=danh_muc)
 
     # Phân trang
-    paginator = Paginator(danh_sach_san_pham, 15)
-    so_trang = request.GET.get('trang')
+    paginator = Paginator(danh_sach_san_pham, 1)
+    so_trang = request.GET.get('page')
     try:
         danh_sach_san_pham_pager = paginator.page(so_trang)
     except PageNotAnInteger:
@@ -29,9 +29,14 @@ def trang_chu(request):
         # Nếu trang không có sản phẩm thì trả về trang cuối cùng
         danh_sach_san_pham_pager = paginator.page(paginator.num_pages)
 
+    page_number = 1 if request.GET.get('page') is None else request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'app_store/index-2.html', {
         'danh_sach_san_pham': danh_sach_san_pham,
         'danh_sach_san_pham_pager': danh_sach_san_pham_pager,
+        'is_paginated': True,
+        'page_obj': page_obj
     })
 
 
@@ -84,8 +89,8 @@ def cua_hang(request):
     danh_sach_san_pham = SanPham.objects.filter(danh_muc=danh_muc)
 
     # Phân trang
-    paginator = Paginator(danh_sach_san_pham, 15)
-    so_trang = request.GET.get('trang')
+    paginator = Paginator(danh_sach_san_pham, 1)
+    so_trang = request.GET.get('page')
     try:
         danh_sach_san_pham_pager = paginator.page(so_trang)
     except PageNotAnInteger:
@@ -94,10 +99,15 @@ def cua_hang(request):
     except EmptyPage:
         # Nếu trang không có sản phẩm thì trả về trang cuối cùng
         danh_sach_san_pham_pager = paginator.page(paginator.num_pages)
-    
+
+    page_number = 1 if request.GET.get('page') is None else request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'app_store/shop-left-sidebar.html', {
         'danh_sach_san_pham': danh_sach_san_pham,
         'danh_sach_san_pham_pager': danh_sach_san_pham_pager,
+        'is_paginated': True,
+        'page_obj': page_obj
     })
 
 

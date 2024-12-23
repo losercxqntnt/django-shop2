@@ -54,16 +54,17 @@ def lien_he(request):
             return tim_kiem_san_pham(request)
 
     if request.method == 'POST':
-        ho_ten = request.POST.get('name')
-        email = request.POST.get('email')
-        tieu_de = request.POST.get('subject')
-        noi_dung = request.POST.get('message')
-        lien_he_moi = LienHe.objects.create(ho_ten=ho_ten,
-                                          email=email,
-                                          tieu_de=tieu_de,
-                                          noi_dung=noi_dung)
-
-        return cam_on_cau_hoi(request)
+        action = request.POST.get('action')
+        if action == 'btnLienHe':
+            ho_ten = request.POST.get('name')
+            email = request.POST.get('email')
+            tieu_de = request.POST.get('subject')
+            noi_dung = request.POST.get('message')
+            lien_he_moi = LienHe.objects.create(ho_ten=ho_ten,
+                                              email=email,
+                                              tieu_de=tieu_de,
+                                              noi_dung=noi_dung)
+            return cam_on_cau_hoi(request)
 
     danh_sach_danh_muc_cha = DanhMuc.objects.filter(danh_muc__isnull=True)
     return render(request, 'app_store/contact.html', {

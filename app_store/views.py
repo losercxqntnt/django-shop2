@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.csrf import csrf_exempt
@@ -62,7 +63,7 @@ def lien_he(request):
                                           tieu_de=tieu_de,
                                           noi_dung=noi_dung)
 
-        return redirect('app_cart:gio_hang')
+        return cam_on_cau_hoi(request)
 
     danh_sach_danh_muc_cha = DanhMuc.objects.filter(danh_muc__isnull=True)
     return render(request, 'app_store/contact.html', {

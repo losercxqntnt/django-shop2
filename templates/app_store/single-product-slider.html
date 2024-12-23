@@ -26,9 +26,12 @@
                 <div class="col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="product-details-content quickview-content">
                         <h2>{{ san_pham.ten_san_pham }}</h2>
-                        <div class="pricing-meta">
+                        <div class="thumb">
+                            <img style="max-width: 300px" src="{{san_pham.hinhsanpham_set.all.0}}" alt="{{product}}"/>
+                        </div>
+                        <div class="pricing-meta" style="margin-top: 1rem;">
                             <ul class="d-flex">
-                                <li class="new-price">{{ san_pham.gia_ban | intcomma }}</li>
+                                <li class="new-price">Giá: {{ san_pham.gia_ban | intcomma }}</li>
                             </ul>
                         </div>
                         <div class="pro-details-rating-wrap">
@@ -41,7 +44,7 @@
                             </div>
                             <span class="read-review"><a class="reviews" href="#">(5 đánh giá)</a></span>
                         </div>
-                        <p class="mt-30px">{{ san_pham.mo_ta }}</p>
+                        <p class="mt-30px">Mô tả: {{ san_pham.mo_ta }}</p>
                         <div class="pro-details-categories-info pro-details-same-style d-flex m-0">
                             <span>SKU:</span>
                             <ul class="d-flex">

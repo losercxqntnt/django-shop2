@@ -39,4 +39,14 @@ class Migration(migrations.Migration):
                 ('don_hang', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app_cart.donhang')),
             ],
         ),
+        migrations.CreateModel(
+            name='KhuyenMai',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('ma_khuyen_mai', models.CharField(max_length=20)),
+                ('ti_le_khuyen_mai', models.IntegerField(default=1)),
+                ('ngay_tao', models.DateTimeField(auto_now_add=True)),
+                ('san_pham', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app_store.sanpham')),
+            ],
+        ),
     ]

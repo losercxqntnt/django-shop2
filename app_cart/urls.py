@@ -10,6 +10,4 @@ urlpatterns = [
     path('mua-ngay/<int:san_pham_id>/', mua_ngay, name='mua_ngay'),
     path('xoa-gio-hang/', xoa_gio_hang, name='xoa_gio_hang'),
     path('xoa-san-pham/<int:san_pham_id>/', xoa_san_pham, name='xoa_san_pham'),
-
-    
 ]

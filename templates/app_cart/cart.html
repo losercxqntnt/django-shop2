@@ -71,7 +71,7 @@
                                         <a href="{% url 'app_store:cua_hang' %}">Tiếp tục mua hàng</a>
                                     </div>
                                     <div class="cart-clear">
-                                        <button type="submit" name="btnCapNhatGioHang" value="Cập nhật giỏ hàng">
+                                        <button type="submit" name="action" value="btnCapNhatGioHang">
                                             Cập nhật giỏ hàng
                                         </button>
                                         <a href="{% url 'app_cart:xoa_gio_hang' %}">Xóa giỏ hàng</a>
@@ -91,9 +91,10 @@
                                 </div>
                                 <div class="discount-code">
                                     <p>Nhập mã giảm giá để được hưởng ưu đãi</p>
-                                    <form>
-                                        <input type="text" required="" name="name" />
-                                        <button class="cart-btn-2" type="submit">Áp dụng</button>
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <input type="text" required="" name="ma_khuyen_mai" />
+                                        <button class="cart-btn-2" type="submit" name="action" value="btnApDungKhuyenMai">Áp dụng</button>
                                     </form>
                                 </div>
                             </div>
@@ -107,7 +108,7 @@
                                 <h5>Tiền giảm <span>{{ gio_hang.tien_giam_gia|intcomma }}</span></h5>
                                 <h5>Phí giao hàng <span>0</span></h5>
                                 <h4 class="grand-totall-title">Tiền phải trả <span>{{ gio_hang.tong_tien_phai_tra|intcomma }}</span></h4>
-                                <a href="{% url 'app_cart:thanh_toan' %}">Thanh toán</a>
+                                <a href="{% url 'app_cart:thanh_toan' %}">Đặt hàng</a>
                             </div>
                         </div>
                     </div>

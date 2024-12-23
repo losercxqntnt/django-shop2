@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import DanhMuc, ThuongHieu, SanPham, HinhSanPham, GioiThieu, LienHe, Slider
 
+
 @admin.register(DanhMuc)
 class DanhMucAdmin(admin.ModelAdmin):
     list_display = ('id', 'ten_danh_muc', 'ten_khong_dau', 'danh_muc', 'mo_ta', 'hinh_anh')

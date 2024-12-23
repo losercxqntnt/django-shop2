@@ -31,3 +31,11 @@ class ChiTietDonHang(models.Model):
     def __str__(self):
         return str(self.don_hang)
 
+class KhuyenMai(models.Model):
+    san_pham = models.ForeignKey(SanPham, on_delete=models.CASCADE)
+    ma_khuyen_mai = models.CharField(max_length=255)
+    ti_le_khuyen_mai = models.DecimalField(max_digits=15, decimal_places=2)
+    ngay_tao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.ma_khuyen_mai)

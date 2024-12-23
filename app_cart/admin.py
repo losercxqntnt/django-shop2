@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import DonHang, ChiTietDonHang
+from .models import DonHang, ChiTietDonHang, KhuyenMai
+
 
 class ChiTietDonHangInline(admin.TabularInline):  # Sử dụng inline để hiển thị chi tiết đơn hàng trong đơn hàng
     model = ChiTietDonHang
@@ -30,3 +31,10 @@ class ChiTietDonHangAdmin(admin.ModelAdmin):
     list_display = ('don_hang', 'san_pham', 'don_gia', 'so_luong', 'giam_gia', 'thanh_tien')  # Hiển thị danh sách
     search_fields = ('don_hang__ma_don_hang', 'san_pham__ten')  # Cho phép tìm kiếm theo mã đơn hàng và tên sản phẩm
     list_filter = ('don_hang__ngay_tao',)  # Bộ lọc theo ngày tạo đơn hàng
+
+@admin.register(KhuyenMai)
+class KhuyenMaiAdmin(admin.ModelAdmin):
+    list_display = ('ma_khuyen_mai', 'san_pham', 'ti_le_khuyen_mai', 'ngay_tao')
+    search_fields = ('ma_khuyen_mai', 'san_pham__ten')
+    list_filter = ('ngay_tao',)
+    ordering = ('-ngay_tao',)
